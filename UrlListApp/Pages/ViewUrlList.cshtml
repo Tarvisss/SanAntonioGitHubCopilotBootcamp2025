@@ -1,0 +1,40 @@
+@page "{customUrl}"
+@model UrlListApp.Pages.ViewUrlListModel
+@{
+    ViewData["Title"] = Model.UrlList?.Title ?? "View List";
+}
+
+@if (Model.UrlList == null)
+{
+    <div class="alert alert-danger">List not found.</div>
+}
+else
+{
+    <h2>@Model.UrlList.Title</h2>
+    <p><strong>Shareable URL:</strong> <code>@Url.Page("/ViewUrlList", new { customUrl = Model.UrlList.CustomUrl })</code></p>
+    <a class="btn btn-primary mb-3" asp-page="/AddUrl" asp-route-customUrl="@Model.UrlList.CustomUrl">Add URL</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>URL</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.UrlList.Urls)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td><a href="@item.Url" target="_blank">@item.Url</a></td>
+                <td>@item.Description</td>
+                <td>
+                    <a class="btn btn-sm btn-warning" asp-page="/EditUrl" asp-route-customUrl="@Model.UrlList.CustomUrl" asp-route-urlId="@item.Id">Edit</a>
+                    <a class="btn btn-sm btn-danger" asp-page="/DeleteUrl" asp-route-customUrl="@Model.UrlList.CustomUrl" asp-route-urlId="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

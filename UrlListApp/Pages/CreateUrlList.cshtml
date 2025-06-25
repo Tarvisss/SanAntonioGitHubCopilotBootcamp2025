@@ -1,0 +1,19 @@
+@page
+@model CreateUrlListModel
+@{
+    ViewData["Title"] = "Create New URL List";
+}
+
+<h2>Create New URL List</h2>
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label">List Title</label>
+        <input asp-for="Title" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="CustomUrl" class="form-label">Custom URL (optional)</label>
+        <input asp-for="CustomUrl" class="form-control" />
+        <span class="text-danger">@Model.ErrorMessage</span>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>

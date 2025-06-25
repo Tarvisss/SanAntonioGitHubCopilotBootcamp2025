@@ -1,0 +1,19 @@
+@page "{customUrl}"
+@model UrlListApp.Pages.DeleteUrlListModel
+@{
+    ViewData["Title"] = "Delete List";
+}
+
+<h2>Delete List</h2>
+@if (Model.UrlList == null)
+{
+    <div class="alert alert-danger">List not found.</div>
+}
+else
+{
+    <form method="post">
+        <p>Are you sure you want to delete the list: <strong>@Model.UrlList.Title</strong>?</p>
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-page="/UrlLists" class="btn btn-secondary">Cancel</a>
+    </form>
+}

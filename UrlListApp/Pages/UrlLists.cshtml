@@ -1,0 +1,32 @@
+@page
+@model UrlListsModel
+@{
+    ViewData["Title"] = "My URL Lists";
+}
+
+<h2>My URL Lists</h2>
+<a class="btn btn-primary mb-3" asp-page="/CreateUrlList">Create New List</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Custom URL</th>
+            <th>Created</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var list in Model.UrlLists)
+    {
+        <tr>
+            <td>@list.Title</td>
+            <td><a asp-page="/ViewUrlList" asp-route-customUrl="@list.CustomUrl">@list.CustomUrl</a></td>
+            <td>@list.CreatedAt.ToShortDateString()</td>
+            <td>
+                <a class="btn btn-sm btn-info" asp-page="/ViewUrlList" asp-route-customUrl="@list.CustomUrl">View</a>
+                <a class="btn btn-sm btn-danger" asp-page="/DeleteUrlList" asp-route-customUrl="@list.CustomUrl">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
