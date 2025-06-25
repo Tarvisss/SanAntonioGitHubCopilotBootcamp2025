@@ -18,20 +18,50 @@ var summaries = new[]
 {
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching", "smile"
 };
+app.MapGet("/weatherforecast/{city}", (string city) =>
+{
+    var forecast = Enumerable.Range(1, 5).Select(index =>
+            new WeatherForecast
+            (
+                DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+                Random.Shared.Next(-20, 55),
+                summaries[Random.Shared.Next(summaries.Length)]
+            ))
+        .ToArray();
 
-app.MapGet("/weatherforecast", () =>
+    return new
     {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
-    })
-    .WithName("GetWeatherForecast");
+        City = city,
+        Forecast = forecast
+    };
+})
+.WithName("GetWeatherForecastByCity");
+
+// app.MapGet("/weatherforecast", () =>
+//     {
+//         var forecast = Enumerable.Range(1, 5).Select(index =>
+//                 new WeatherForecast
+//                 (
+//                     DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+//                     Random.Shared.Next(-20, 55),
+//                     summaries[Random.Shared.Next(summaries.Length)]
+//                 ))
+//             .ToArray();
+//         return forecast;
+//     })
+//     .WithName("GetWeatherForecast");
+
+app.MapGet("/willitrain/{city}", (string city) =>
+{
+    // Randomly decide if it will rain
+    bool willRain = Random.Shared.Next(0, 2) == 1;
+    return new
+    {
+        City = city,
+        WillItRain = willRain
+    };
+})
+.WithName("WillItRainByCity");
 
 app.Run();
 
