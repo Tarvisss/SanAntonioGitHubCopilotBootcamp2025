@@ -18,6 +18,7 @@
   "customizations": {
     "vscode": {
       "extensions": [
+        "vstirbu.vscode-mermaid-preview",
         "GitHub.copilot",
         "ms-dotnettools.csdevkit"
       ],
